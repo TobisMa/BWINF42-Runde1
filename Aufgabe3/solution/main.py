@@ -1,6 +1,6 @@
 import os
 import sys
-from typing import List, Tuple
+from typing import Dict, List, Optional, Tuple
 from graph import Graph, Knot
 
 
@@ -9,12 +9,21 @@ WAY = "."
 START = "A"
 END = "B"
 
-UP = "^"
-DOWN = "v"
+UP = "v"
+DOWN = "^"
 LEFT = "<"
 RIGHT = ">"
 SWITCH_UP = "U"
 SWITCH_DOWN = "D"
+
+DIRECTION_MAP: Dict[Tuple[int, int, int], str] = {
+    (1, 0, 0): RIGHT,
+    (-1, 0, 0): LEFT,
+    (0, 1, 0): UP,
+    (0, -1, 0): DOWN,
+    (0, 0, 1): SWITCH_DOWN,
+    (0, 0, -1): SWITCH_UP
+}
 
 
 def add_connections(g: Graph[Tuple[int, int, int], str]):
@@ -82,20 +91,56 @@ def parse_input(filename: str) -> Tuple[Graph, Knot, Knot, Tuple[int, int, int]]
 
             y += 1
     
-    if not prev_empty_line:
-        # ensure the right floor count
-        floor += 1
+    # ensure the right floor count
+    floor += 1
     
-    dimensions.append(max(0, floor - 1))
+    dimensions.append(floor)
     add_connections(g)
 
     return g, start, end, dimensions  # type: ignore
 
+    
+def find_direction(path: List[Knot[Tuple[int, int, int], str]], k: Knot[Tuple[int, int, int], str]):
+    index = path.index(k)    
+    if index == len(path) - 1:
+        return END
+    
+    next_knot = path[index + 1]
+    
+    pos = k.id
+    next_pos = next_knot.id
+    
+    diff = (
+        next_pos[0] - pos[0],
+        next_pos[1] - pos[1],
+        next_pos[2] - pos[2]
+    )
 
-def visualize(g: Graph[Tuple[int, int, int], str], path: List[Knot[Tuple[int, int, int], str]], dimensions: Tuple[int, int, int]):
-    print('\n'.join(str(k.id) for k in path))
-    print(dimensions)
+    return DIRECTION_MAP[diff]
+    
+    
 
+
+def visualize(file_object, g: Graph[Tuple[int, int, int], str], path: List[Knot[Tuple[int, int, int], str]], dimensions: Tuple[int, int, int]):
+    for floor in range(dimensions[2]):
+        for height in range(dimensions[1]):
+            # construct line
+            line = ""
+            for width in range(dimensions[0]):
+                pos = (width, height, floor)
+                k = g.knots[pos]
+
+                # check if has direction and use according char
+                char = k.value
+                if k in path:
+                    char = find_direction(path, k)
+                    
+                line += char
+
+            print(line, flush=True)  # move into stream
+        print()
+
+    
 
 def main(*input_files):
     files = list(input_files)
@@ -103,14 +148,17 @@ def main(*input_files):
     if not files:
         files.append(input("Input file path: "))
         
-    for file in files:
+    for file in files:        
         if not os.access(file, os.R_OK):
             print("Cannot open input file %r" % file)
         print("Parsing File %r" % file)
         graph, start, end, dimension = parse_input(file)
+
         path, distance = graph.dijkstra(start, end)
-        print(distance)
-        visualize(graph, path, dimension)
+
+        print("Path length: %i" % distance)
+        visualize(sys.stdout, graph, path, dimension)
+    
 
     
 

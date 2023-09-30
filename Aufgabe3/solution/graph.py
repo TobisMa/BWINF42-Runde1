@@ -11,9 +11,9 @@ class Knot(Generic[T, V]):
 
     __slots__ = ["id", "value", "destinations"]    
     
-    def __init__(self, id: T, value: Optional[V]):
+    def __init__(self, id: T, value: V):
         self.id: T = id
-        self.value: Optional[V] = value
+        self.value: V = value
         self.destinations: Dict[Knot, int] = {}
     
     def __repr__(self) -> str:
