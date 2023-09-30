@@ -1,0 +1,3 @@
+[submodule "BWINF42 A4 Webversion"]
+	path = Aufgabe4/webVersion
+	url = https://github.com/TobisMa/BWINF-Runde42-Webversion.git
