@@ -94,7 +94,7 @@ def parse_input(filename: str) -> Tuple[Graph, Knot, Knot, Tuple[int, int, int]]
     # ensure the right floor count
     floor += 1
     
-    dimensions.append(floor)
+    dimensions = [dimensions[1], dimensions[0], floor]
     add_connections(g)
 
     return g, start, end, dimensions  # type: ignore
@@ -158,6 +158,7 @@ def main(*input_files):
 
         print("Path length: %i" % distance)
         visualize(sys.stdout, graph, path, dimension)
+        print()
     
 
     
