@@ -1,21 +1,25 @@
 import os
 import sys
-from typing import Dict, List, Optional, Tuple
-from graph import Graph, Knot
+from typing import Dict, List, Tuple
 
+from graph import Graph, Node
 
+# input chars
 WALL = "#"
 WAY = "."
 START = "A"
 END = "B"
 
+# output chars for the path
 UP = "v"
 DOWN = "^"
 LEFT = "<"
 RIGHT = ">"
-SWITCH_UP = "U"
-SWITCH_DOWN = "D"
+SWITCH_UP = "U"      # going floor down in a multilayered Bugwarts
+SWITCH_DOWN = "D"    # going floor up in a multilayered Bugwarts
+SWITCH_FLOOR = "!"   # generally for switching between floors; only used if there are exact two floors
 
+# for which position change which output char should be used
 DIRECTION_MAP: Dict[Tuple[int, int, int], str] = {
     (1, 0, 0): RIGHT,
     (-1, 0, 0): LEFT,
@@ -25,37 +29,52 @@ DIRECTION_MAP: Dict[Tuple[int, int, int], str] = {
     (0, 0, -1): SWITCH_UP
 }
 
+# edge weights
+TO_SAME_FLOOR = 1
+TO_OTHER_FLOOR = 3
+
 
 def add_connections(g: Graph[Tuple[int, int, int], str]):
-    for k in g.knots.values():
-        (x, y, z), value = k.id, k.value
+    """
+    Creates all edges between WAY nodes in the given graph
+
+    Args:
+        g (Graph[Tuple[int, int, int], str]): graph containing all the floor points and there point type (WAY or WALL)
+    """
+
+    for n in g.nodes.values():
+        (x, y, z), value = n.id, n.value
         if value == "#":
             continue
 
         for i in range(-1, 2, 2):
+            # adding left/right edge
             tpos = (x + i, y, z)
-            tknot = g.knots.get(tpos)
-            if tknot and tknot.value != WALL:
-                g.add_edge(k, tknot, 1)
+            tnode = g.nodes.get(tpos)
+            if tnode and tnode.value != WALL:
+                g.add_edge(n, tnode, TO_SAME_FLOOR)
 
+            # adding up/down edge on floor plane (not floor switch)
             tpos = (x, y + i, z)
-            tknot = g.knots.get(tpos)
-            if tknot and tknot.value != WALL:
-                g.add_edge(k, tknot, 1)
+            tnode = g.nodes.get(tpos)
+            if tnode and tnode.value != WALL:
+                g.add_edge(n, tnode, TO_SAME_FLOOR)
 
+            # adding up/down edge for floor switches
             tpos = (x, y, z + i)
-            tknot = g.knots.get(tpos)
-            if tknot and tknot.value != WALL:
-                g.add_edge(k, tknot, 3) 
+            tnode = g.nodes.get(tpos)
+            if tnode and tnode.value != WALL:
+                g.add_edge(n, tnode, TO_OTHER_FLOOR)  # using 3 as weight 
 
 
-def parse_input(filename: str) -> Tuple[Graph, Knot, Knot, Tuple[int, int, int]]:
+def parse_input(filename: str) -> Tuple[Graph, Node, Node, Tuple[int, int, int]]:
     g: Graph[Tuple[int, int, int], str] = Graph()
     floor = -1
     y = 0
-    start = None,
-    end = None
+    start = None  # start node for the later dijkstra call
+    end = None    # target node for the later dijkstra call 
     prev_empty_line = True
+
     with open(filename, 'r') as f:
         dimensions = list(map(int, f.readline().split(" ")))
 
@@ -77,38 +96,50 @@ def parse_input(filename: str) -> Tuple[Graph, Knot, Knot, Tuple[int, int, int]]
             for x, char in enumerate(line):
                 pos = x, y, floor
 
-                knot = Knot(pos, char)
+                # keep WALL position for output later. WALL nodes won't have any connections later on
+                node = Node(pos, char)
                 
                 if char == START:
-                    start = knot
-                    knot.value = WAY
+                    start = node
+                    node.value = WAY
                 
                 if char == END:
-                    end = knot
-                    knot.value = WAY
+                    end = node
+                    node.value = WAY
                     
-                g.add_knot(knot)
+                g.add_node(node)
 
             y += 1
     
     # ensure the right floor count
     floor += 1
     
-    dimensions = [dimensions[1], dimensions[0], floor]
+    dimensions = [dimensions[1], dimensions[0], floor]  # reorder dimensions to have x, y, z format
     add_connections(g)
 
     return g, start, end, dimensions  # type: ignore
 
     
-def find_direction(path: List[Knot[Tuple[int, int, int], str]], k: Knot[Tuple[int, int, int], str]):
+def find_direction(path: List[Node[Tuple[int, int, int], str]], k: Node[Tuple[int, int, int], str], multi_layerd: bool):
+    """
+    Returns the appropriate char for the direction Ron needs to go
+
+    Args:
+        path (List[Node[Tuple[int, int, int], str]]): the path which needs to be traveled
+        k (Node[Tuple[int, int, int], str]): the current position on the path
+        multi_layered (bool): Should the chars for multi-layered floors be used. `U` and `D` instead of `!`. This clarifies the direction if the given Bugwarts has more than two floors 
+
+    Returns:
+        str: the character for that field
+    """
     index = path.index(k)    
     if index == len(path) - 1:
         return END
     
-    next_knot = path[index + 1]
+    next_node = path[index + 1]
     
     pos = k.id
-    next_pos = next_knot.id
+    next_pos = next_node.id
     
     diff = (
         next_pos[0] - pos[0],
@@ -116,24 +147,27 @@ def find_direction(path: List[Knot[Tuple[int, int, int], str]], k: Knot[Tuple[in
         next_pos[2] - pos[2]
     )
 
-    return DIRECTION_MAP[diff]
+    d = DIRECTION_MAP[diff]
+    if not multi_layerd and d in (SWITCH_DOWN, SWITCH_UP):
+        return SWITCH_FLOOR
+    return d
     
     
 
 
-def visualize(file_object, g: Graph[Tuple[int, int, int], str], path: List[Knot[Tuple[int, int, int], str]], dimensions: Tuple[int, int, int]):
+def visualize(file_object, g: Graph[Tuple[int, int, int], str], path: List[Node[Tuple[int, int, int], str]], dimensions: Tuple[int, int, int]):
     for floor in range(dimensions[2]):
         for height in range(dimensions[1]):
             # construct line
             line = ""
             for width in range(dimensions[0]):
                 pos = (width, height, floor)
-                k = g.knots[pos]
+                k = g.nodes[pos]
 
                 # check if has direction and use according char
                 char = k.value
                 if k in path:
-                    char = find_direction(path, k)
+                    char = find_direction(path, k, dimensions[2] >= 3)
                     
                 line += char
 
@@ -151,14 +185,18 @@ def main(*input_files):
     for file in files:        
         if not os.access(file, os.R_OK):
             print("Cannot open input file %r" % file)
+
         print("Parsing File %r" % file)
+
+        # reading input
         graph, start, end, dimension = parse_input(file)
 
+        # find path
         path, distance = graph.dijkstra(start, end)
 
+        # converting result to human readable data
         print("Path length: %i" % distance)
         visualize(sys.stdout, graph, path, dimension)
-        print()
     
 
     
