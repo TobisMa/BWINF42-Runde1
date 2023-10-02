@@ -180,7 +180,7 @@ def visualize(g: Graph[Tuple[int, int, int], str], path: List[Node[Tuple[int, in
                 # check if has direction and use according char
                 char = k.value
                 if k in path:
-                    char = find_direction(path, k, dimensions[2] >= 3)  # returns the character which should be used to describe the direction in which Ron has to go
+                    char = find_direction(path, k, dimensions[2] >= 3)
                     
                 line += char
 
