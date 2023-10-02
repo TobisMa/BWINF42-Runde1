@@ -168,7 +168,7 @@ def find_direction(path: List[Node[Tuple[int, int, int], str]], k: Node[Tuple[in
     return d
     
 
-def visualize(file_object, g: Graph[Tuple[int, int, int], str], path: List[Node[Tuple[int, int, int], str]], dimensions: Tuple[int, int, int]):
+def visualize(g: Graph[Tuple[int, int, int], str], path: List[Node[Tuple[int, int, int], str]], dimensions: Tuple[int, int, int]):
     for floor in range(dimensions[2]):
         for height in range(dimensions[1]):
             # construct line
@@ -207,7 +207,7 @@ def main(*input_files):
 
         # converting result to human readable data
         print("Path length: %i" % distance)
-        visualize(sys.stdout, graph, path, dimension)
+        visualize(graph, path, dimension)
     
 
     
