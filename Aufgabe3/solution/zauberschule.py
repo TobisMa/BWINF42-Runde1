@@ -141,7 +141,8 @@ def find_direction(path: List[Node[Tuple[int, int, int], str]], k: Node[Tuple[in
     Args:
         path (List[Node[Tuple[int, int, int], str]]): the path which needs to be traveled
         k (Node[Tuple[int, int, int], str]): the current position on the path
-        multi_layered (bool): Should the chars for multi-layered floors be used. `U` and `D` instead of `!`. This clarifies the direction if the given Bugwarts has more than two floors 
+        multi_layered (bool): Should the chars for multi-layered floors be used. `U` and `D` instead of `!`. 
+            This clarifies the direction if the given Bugwarts has more than two floors 
 
     Returns:
         str: the character for that field
@@ -166,8 +167,6 @@ def find_direction(path: List[Node[Tuple[int, int, int], str]], k: Node[Tuple[in
         return SWITCH_FLOOR
     return d
     
-    
-
 
 def visualize(file_object, g: Graph[Tuple[int, int, int], str], path: List[Node[Tuple[int, int, int], str]], dimensions: Tuple[int, int, int]):
     for floor in range(dimensions[2]):
@@ -181,7 +180,7 @@ def visualize(file_object, g: Graph[Tuple[int, int, int], str], path: List[Node[
                 # check if has direction and use according char
                 char = k.value
                 if k in path:
-                    char = find_direction(path, k, dimensions[2] >= 3)
+                    char = find_direction(path, k, dimensions[2] >= 3)  # returns the character which should be used to describe the direction in which Ron has to go
                     
                 line += char
 
@@ -204,7 +203,7 @@ def main(*input_files):
         graph, start, end, dimension = parse_input(file)
 
         # find path
-        path, distance = graph.dijkstra(start, end)
+        path, distance = graph.find_shortest_path(start, end)
 
         # converting result to human readable data
         print("Path length: %i" % distance)

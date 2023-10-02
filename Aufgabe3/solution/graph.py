@@ -48,7 +48,8 @@ class Graph(Generic[T, V]):
     def remove_edge(self, start: Node[T, V], end: Node[T, V]) -> int:
         return start.remove_destination(end)
 
-    def dijkstra(self, start: Node[T, V], target: Node[T, V]) -> Tuple[List[Node[T, V]], float]:
+    def find_shortest_path(self, start: Node[T, V], target: Node[T, V]) -> Tuple[List[Node[T, V]], float]:
+        # use dijkstra first to calculate the shortest path  
         distances: Dict[Node[T, V], float] = {
             start: 0
         }
@@ -80,10 +81,11 @@ class Graph(Generic[T, V]):
         # retrace path
         path = [target]
 
+        # don't insert start to prevent KeyError since start does not have a previous node, obviously
         while previous_nodes[path[0]] != start:
             path.insert(0, previous_nodes[path[0]])
 
-        path.insert(0, start)
+        path.insert(0, start)  # add start since it is the beginning of the path
         
         return path, distances[target]
     
