@@ -24,7 +24,7 @@ class Node(Generic[T, V]):
     def remove_destination(self, destination: "Node") -> int:
         return self.destinations.pop(destination, 0)
 
-    def get_destinations(self) -> List["Node[T]"]:
+    def get_destinations(self) -> List["Node[T, V]"]:
         return list(self.destinations.keys())
 
     

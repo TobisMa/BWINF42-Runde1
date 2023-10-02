@@ -4,7 +4,7 @@ from typing import Dict, List, Tuple
 
 from graph import Graph, Node
 
-# input chars
+# input chars (spaces cannot be used)
 WALL = "#"
 WAY = "."
 START = "A"
@@ -71,6 +71,7 @@ def parse_input(filename: str) -> Tuple[Graph, Node, Node, Tuple[int, int, int]]
     g: Graph[Tuple[int, int, int], str] = Graph()
     floor = -1
     y = 0
+    x = 0
     start = None  # start node for the later dijkstra call
     end = None    # target node for the later dijkstra call 
     prev_empty_line = True
@@ -79,9 +80,13 @@ def parse_input(filename: str) -> Tuple[Graph, Node, Node, Tuple[int, int, int]]
         dimensions = list(map(int, f.readline().split(" ")))
 
         for line in f:
-            line = line.strip(" \n")
+            line = line.rstrip(" \n")
             if not line:
                 # new floor
+                if y != dimensions[0]:
+                    print("Incorrect dimensions")
+                    sys.exit(-1)
+
                 y = 0
                 prev_empty_line = True
                 continue
@@ -94,6 +99,10 @@ def parse_input(filename: str) -> Tuple[Graph, Node, Node, Tuple[int, int, int]]
             
             # read in floor line
             for x, char in enumerate(line):
+                if char not in (WALL, WAY, START, END):
+                    print("Unknown field character %r" % char)
+                    sys.exit(-1)
+                    
                 pos = x, y, floor
 
                 # keep WALL position for output later. WALL nodes won't have any connections later on
@@ -109,6 +118,11 @@ def parse_input(filename: str) -> Tuple[Graph, Node, Node, Tuple[int, int, int]]
                     
                 g.add_node(node)
 
+            if x != dimensions[1] - 1:  # still unordered dimensions
+                print(x)
+                print("Incorrect dimensions in line %r" % line)
+                sys.exit(-1)
+            
             y += 1
     
     # ensure the right floor count
@@ -185,8 +199,6 @@ def main(*input_files):
     for file in files:        
         if not os.access(file, os.R_OK):
             print("Cannot open input file %r" % file)
-
-        print("Parsing File %r" % file)
 
         # reading input
         graph, start, end, dimension = parse_input(file)
