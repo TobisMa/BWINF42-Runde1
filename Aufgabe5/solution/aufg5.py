@@ -1,5 +1,5 @@
 import pandas as pd
-from collections import defaultdict
+
 
 path = r"Aufgabe5\data\tour1.txt"
 
