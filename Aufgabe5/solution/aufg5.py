@@ -13,7 +13,7 @@ def find_subtours(tour):
     open_stops = {}
     for i,stop in enumerate(tour):
         if stop[0] in open_stops:
-            subtours.append([open_stops[stop[0]][1]+1,i])
+            subtours += list(range(open_stops[stop[0]][1]+1,i+1))
             open_stops.clear()
         elif stop[2] == "X":
             open_stops.clear()
