@@ -22,3 +22,9 @@ def find_subtours(tour):
             open_stops[stop[0]] = stop[3]
     
     return subtours
+
+def remove_stops(tour: list,stop_indices):
+    for i in reversed(stop_indices):
+        del tour[i]
+    return tour
+
