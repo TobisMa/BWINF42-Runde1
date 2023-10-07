@@ -198,6 +198,7 @@ def main(*input_files):
     for file in files:        
         if not os.access(file, os.R_OK):
             print("Cannot open input file %r" % file)
+            continue
 
         # reading input
         graph, start, end, dimension = parse_input(file)
