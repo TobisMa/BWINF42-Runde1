@@ -1,7 +1,9 @@
 import pandas as pd
-from collections import defaultdict
 
-df = pd.read_csv(r"Aufgabe5\data\tour1.txt",skiprows=1,names=["Ort","Jahr","Essentiell?","Distanz von Start"])
+
+path = r"Aufgabe5\data\tour1.txt"
+
+df = pd.read_csv(path,skiprows=1,names=["Ort","Jahr","Essentiell?","Distanz von Start"])
 tour = df.values.tolist()
 
 
@@ -23,8 +25,13 @@ def find_subtours(tour):
     
     return subtours
 
+
 def remove_stops(tour: list,stop_indices):
     for i in reversed(stop_indices):
         del tour[i]
     return tour
 
+
+stops = find_subtours(tour)
+new_tour = remove_stops(tour,stops)
+print(pd.DataFrame(new_tour))
