@@ -24,7 +24,7 @@ class Node(Generic[T, V]):
     def remove_destination(self, destination: "Node") -> int:
         return self.destinations.pop(destination, 0)
 
-    def get_destinations(self) -> List["Node[T]"]:
+    def get_destinations(self) -> List["Node[T, V]"]:
         return list(self.destinations.keys())
 
     
@@ -48,7 +48,7 @@ class Graph(Generic[T, V]):
     def remove_edge(self, start: Node[T, V], end: Node[T, V]) -> int:
         return start.remove_destination(end)
 
-    def dijkstra(self, start: Node[T, V], target: Node[T, V]) -> Tuple[List[Node[T, V]], float]:
+    def find_shortest_path(self, start: Node[T, V], target: Node[T, V]) -> Tuple[List[Node[T, V]], float]:
         distances: Dict[Node[T, V], float] = {
             start: 0
         }
