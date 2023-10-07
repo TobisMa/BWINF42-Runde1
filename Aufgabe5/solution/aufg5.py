@@ -21,6 +21,4 @@ def find_subtours(tour):
         else:
             open_stops[stop[0]] = stop[3]
     
-    print(subtours)
-
-find_subtours(tour)
+    return subtours
