@@ -1,0 +1,83 @@
+Results from '..\data\nandu3.txt':
+
+Q1: Off
+Q2: Off
+Q3: Off
+
+L1: On
+L2: Off
+L3: Off
+L4: On
+--------
+
+Q1: On
+Q2: Off
+Q3: Off
+
+L1: Off
+L2: On
+L3: Off
+L4: On
+--------
+
+Q1: Off
+Q2: On
+Q3: Off
+
+L1: On
+L2: Off
+L3: On
+L4: On
+--------
+
+Q1: On
+Q2: On
+Q3: Off
+
+L1: Off
+L2: On
+L3: On
+L4: On
+--------
+
+Q1: Off
+Q2: Off
+Q3: On
+
+L1: On
+L2: Off
+L3: Off
+L4: Off
+--------
+
+Q1: On
+Q2: Off
+Q3: On
+
+L1: Off
+L2: On
+L3: Off
+L4: Off
+--------
+
+Q1: Off
+Q2: On
+Q3: On
+
+L1: On
+L2: Off
+L3: On
+L4: Off
+--------
+
+Q1: On
+Q2: On
+Q3: On
+
+L1: Off
+L2: On
+L3: On
+L4: Off
+--------
+
+

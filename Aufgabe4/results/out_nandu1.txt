@@ -1,0 +1,31 @@
+Results from '..\data\nandu1.txt':
+
+Q1: Off
+Q2: Off
+
+L1: On
+L2: On
+--------
+
+Q1: On
+Q2: Off
+
+L1: Off
+L2: Off
+--------
+
+Q1: Off
+Q2: On
+
+L1: Off
+L2: Off
+--------
+
+Q1: On
+Q2: On
+
+L1: Off
+L2: Off
+--------
+
+

@@ -2,22 +2,42 @@
 {-# HLINT ignore "Avoid lambda" #-}
 {-# LANGUAGE BlockArguments #-}
 {-# HLINT ignore "Use camelCase" #-}
+import System.Environment
 import           Data.Bits
 import           Data.Char (isDigit)
 
-main :: IO ()
--- main = putStrLn( solve  ())))
+
+main :: IO()
 main = do
-    putStrLn "Enter Filepath:"
-    fp <- getLine
-    s <- readFile fp
+    args <- getArgs
+    if null args
+        then do mainAsk
+    else if length args >= 2
+        then do putStrLn "Only one file arg is valid per time"
+        else do mainFilename (head args)
+
+
+mainFilename :: String -> IO()
+mainFilename filename = do
+    s <- readFile filename
     let l = filter (\x -> not (null x)) (lines s)
     let results = solve l
-    putStrLn (unlines (map (\x->show x) (snd results)))
+    -- putStrLn (unlines (map (\x->show x) (snd results)))
+    putStrLn ("Results from '" ++ filename ++ "':\n")
     putStrLn (pprint results (last l))
 
+
+
+
+mainAsk :: IO()
+mainAsk = do
+    putStrLn "Enter Filepath:"
+    fp <- getLine
+    mainFilename fp
+
+
 pprint :: ([Bool], [([Bool], [Bool])]) -> [Char] -> String
-pprint (lights, results) lamps = "Results:\n" ++ foldl
+pprint (lights, results) lamps = foldl
         (\b x-> b ++ pprintSection "Q" lights (fst x) ++ "\n" ++ pprintSection "L" l (snd x) ++ "--------\n\n")
         ""
         results
@@ -83,7 +103,7 @@ tokenize = filter (\x -> x /= ' ' && not (isDigit x))
 
 translateBlock :: [Char] -> [Bool] -> [Bool] -> Int -> Bool -> [Bool]
 translateBlock tokenizedRow lights newLights index hadBrick
-    | index >= length tokenizedRow - 1 = newLights
+    | index >= length tokenizedRow = newLights
     | not hadBrick && brick tokenizedRow index == ('W', 'W') = let
         brickResult = whiteBrick (lightStateSegment lights index)
         in
@@ -101,7 +121,7 @@ translateBlock tokenizedRow lights newLights index hadBrick
         in
             fst brickResult : snd brickResult : translateBlock tokenizedRow lights newLights (index + 1) True
     | tokenizedRow !! index == 'X' = False : translateBlock tokenizedRow lights newLights (index + 1) False
-    | tokenizedRow !! index == 'L' = lights !! index : translateBlock tokenizedRow lights newLights (index + 1) False
+    | tokenizedRow !! index == 'L' = (lights !! index) : translateBlock tokenizedRow lights newLights (index + 1) False
     | otherwise = translateBlock tokenizedRow lights newLights (index + 1) False
     -- | otherwise = error ("invalid symbol " ++ [tokenizedRow !! index])
 
@@ -114,8 +134,8 @@ listTuple :: Show a => [a] -> Int -> (a, a)
 listTuple lst lastIndex = (lst !! (lastIndex - 1), lst !! lastIndex)
 
 brick :: [Char] -> Int -> (Char, Char)
-brick lst lastIndex = if lastIndex == 0 || lastIndex >= length lst 
-    then ('N', 'N') 
+brick lst lastIndex = if lastIndex == 0 || lastIndex >= length lst
+    then ('N', 'N')
     else listTuple lst lastIndex
 
 lightStateSegment :: [Bool] -> Int -> (Bool, Bool)
