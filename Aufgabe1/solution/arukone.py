@@ -2,7 +2,6 @@ import math
 import random
 import sys
 from time import sleep
-from turtle import pos
 from typing import Dict, Generator, List, Tuple
 
 from attr import dataclass
@@ -57,11 +56,15 @@ def get_reachable_positions(start: Point, field: List[List[int]], data: Dict[Poi
 
 def solve(n: int, pairs: int, depth=100):
     if depth <= 0:
-        print("INFO: Failed finding a solution within 100 tries")
+        print("FAILURE: Failed finding a solution within 100 tries")
         return
         
     if n < 4 or int(n // 2 + 0.5) > pairs:
-        print("N < 4 or too less pairs")
+        print("FAILURE: N < 4 or too less pairs")
+        return
+    
+    if n * n // 2 < pairs:
+        print(f"FAILURE: Too many pairs required. Maximum possible: {n * n // 2}; Required:", pairs)
         return
         
     field = [[0 for _ in range(n)] for _ in range(n)]
@@ -85,10 +88,13 @@ def solve(n: int, pairs: int, depth=100):
             solve(n, pairs, depth-1)
             return
             
+        # choosing start point
         pos1 = random.choice(free_positions)
-        reachable_positions: Dict[Point, List[Point]] = get_reachable_positions(pos1, field, {})
+
         
-        reachable_positions.pop(pos1)   # only help for the funtion
+        # finding every reachable field
+        reachable_positions: Dict[Point, List[Point]] = get_reachable_positions(pos1, field, {})
+        reachable_positions.pop(pos1)   # only help for the funtion (added in the function)
         if not reachable_positions:
             # single closed field with no neighbours
             free_positions.remove(pos1)
@@ -97,6 +103,7 @@ def solve(n: int, pairs: int, depth=100):
                 solve(n, pairs, depth-1)
                 return
             continue
+
 
         # larger distances = more difficult to solve
         lpositions = sorted(list(reachable_positions), key=lambda x: len(reachable_positions[x]), reverse=True)
@@ -110,14 +117,17 @@ def solve(n: int, pairs: int, depth=100):
             elif len(reachable_positions[lpositions[i]]) - 1 <= size_pair_ratio:
                 lpositions.pop(i)
 
+        # choosing end point
         index = random.randint(0, len(lpositions) - 1)
         pos2 = lpositions[index]
         
+        # marking path
         for p in reachable_positions[pos2]:
             field[p.y][p.x] = pairs - len(positions)
             free_positions.remove(p)
         positions[pairs - len(positions)] = (pos1, pos2)
 
+    # outputting solution and unsolved arukon
     print_result(n, pairs, positions, field)
 
 
