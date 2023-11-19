@@ -77,8 +77,6 @@ def solve(n: int, pairs: int, depth=100):
             print("INFO: The resulting field would not have a high complexity, therefore this algorithm may fail")
         sleep(TIME_DELAY_FOR_INFO)
         
-    print(f"{size_pair_ratio=}")
-
     while len(positions) < pairs:
         if not free_positions:
             print("Failure: No free positions anymore.\nCurrent result:")
