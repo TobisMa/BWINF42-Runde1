@@ -20,8 +20,10 @@ def print_field(f: List[List[int]]) -> None:
 def get_neighbours(pos: Point, field) -> Generator[Point, None, None]:
     for dy in range(-1, 2, 2):
         for dx in range(-1, 2, 2):
+            if pos.x + dx < 0 or pos.x + dx >= len(field) or pos.y + dx < 0 or pos.y + dx >= len(field):
+                continue
             n = Point(pos.x + dx, pos.y + dy)
-            if n == 0:
+            if field[n.y][n.x] == 0:
                 yield n
 
     
@@ -29,6 +31,8 @@ def get_reachable_positions(start: Point, field: List[List[int]], data: Dict[Poi
     if not data:
         data[start] = [start]
     for neighbour in get_neighbours(start, field):
+        if data.get(neighbour):
+            continue
         data[neighbour] = data[start][:] + [neighbour]
         data |= get_reachable_positions(neighbour, field, data)
     return data
