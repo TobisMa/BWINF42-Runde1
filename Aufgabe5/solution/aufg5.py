@@ -1,3 +1,4 @@
+import sys
 import pandas as pd
 
 
@@ -63,12 +64,18 @@ def shorten_tour(tour: list):
     return tour
 
 
-path = r"Aufgabe5\data\tour4.txt"
+def get_paths():
+    if len(sys.argv) == 1:
+        yield input("Enter file path: ")
+    else:
+        for path in sys.argv[1:]:
+            yield path
 
-df = pd.read_csv(path,skiprows=1,names=["Ort","Jahr","Essentiell?","Distanz von Start"])
-tour = df.values.tolist()
-print(df)
+for path in get_paths():
+    df = pd.read_csv(path,skiprows=1,names=["Ort","Jahr","Essentiell?","Distanz von Start"])
+    tour = df.values.tolist()
+    print(df)
 
-improved_tour = shorten_tour(tour)
+    improved_tour = shorten_tour(tour)
 
-print(pd.DataFrame(improved_tour))
+    print(pd.DataFrame(improved_tour))
