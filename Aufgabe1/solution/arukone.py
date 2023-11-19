@@ -55,9 +55,9 @@ def get_reachable_positions(start: Point, field: List[List[int]], data: Dict[Poi
     return data
     
 
-def solve(n: int, pairs: int, depth=50):
+def solve(n: int, pairs: int, depth=100):
     if depth <= 0:
-        print("INFO: Failed finding a solution within 50 tries")
+        print("INFO: Failed finding a solution within 100 tries")
         return
         
     if n < 4 or int(n // 2 + 0.5) > pairs:
@@ -141,6 +141,7 @@ def main(*sizes: str):
         while not pn.isnumeric():
             pn = input("Amount of pairs: ")
         p = int(pn)
+        print("Started...")
         solve(n, p)
     
     else:
@@ -149,6 +150,7 @@ def main(*sizes: str):
             sizes = sizes[:-1]
             
         for i, n in enumerate(sizes[::2]):
+            print("Started...")
             solve(int(n), int(sizes[2 * i + 1]))
             if i != len(sizes) - 1:
                 print("----------------------\n")
