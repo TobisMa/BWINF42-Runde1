@@ -8,8 +8,7 @@ from typing import Dict, Generator, List, Tuple
 from attr import dataclass
 
 TIME_DELAY_FOR_INFO = 1
-
-sys.
+sys.setrecursionlimit(5000)  # for large fields more recursion is needed than 500
 
 @dataclass(slots=True, init=True, hash=True, eq=True)
 class Point:

@@ -1,37 +1,37 @@
                  Ort  Jahr Essentiell?  Distanz von Start
 0       Blaues Pferd  1523                              0
-1         Alte M³hle  1544                            110
+1         Alte Mühle  1544                            110
 2         Marktplatz  1549                            210
 3           Zeughaus  1559                            310
 4         Marktplatz  1562                            410
 5      Springbrunnen  1571                            490
 6                Dom  1596           X                560
-7       Bogensch³tze  1610                            680
+7       Bogenschütze  1610                            680
 8         Marktplatz  1622                            820
 9        Ruhiges Eck  1625                            850
 10         Frauentor  1636                            910
 11       Ruhiges Eck  1651                            980
 12     Springbrunnen  1675                           1000
-13      Bogensch³tze  1683                           1070
+13      Bogenschütze  1683                           1070
 14          Schnecke  1698           X               1220
 15       Fischweiher  1710                           1400
 16         Reiterhof  1728           X               1520
 17          Schnecke  1742                           1660
 18          Schmiede  1765                           1830
-19       Gro▀e Gabel  1794                           1940
+19       Große Gabel  1794                           1940
 20          Schnecke  1829                           2050
 21        Europapark  1852                           2280
-22       Gro▀e Gabel  1874                           2550
+22       Große Gabel  1874                           2550
 23         Fingerhut  1917           X               2620
 24           Stadion  1934                           2740
 25        Marktplatz  1962                           2830
 26        Baumschule  1974                           2910
-27  Polizeiprõsidium  1991                           3050
+27  Polizeipräsidium  1991                           3050
 28      Blaues Pferd  2004                           3200
 Looking for unnecessary subtours:
 Marktplatz - Zeughaus - Marktplatz
 Ruhiges Eck - Frauentor - Ruhiges Eck
-Schnecke - Schmiede - Gro▀e Gabel - Schnecke
+Schnecke - Schmiede - Große Gabel - Schnecke
 Looking for a better start:
 new best start: Blaues Pferd
 new best start: Marktplatz
@@ -39,17 +39,17 @@ new best start: Marktplatz
 0      Marktplatz  1549   
 1   Springbrunnen  1571   
 2             Dom  1596  X
-3    Bogensch³tze  1610   
+3    Bogenschütze  1610   
 4      Marktplatz  1622   
 5     Ruhiges Eck  1625   
 6   Springbrunnen  1675   
-7    Bogensch³tze  1683   
+7    Bogenschütze  1683   
 8        Schnecke  1698  X
 9     Fischweiher  1710   
 10      Reiterhof  1728  X
 11       Schnecke  1742   
 12     Europapark  1852   
-13    Gro▀e Gabel  1874   
+13    Große Gabel  1874   
 14      Fingerhut  1917  X
 15        Stadion  1934   
 16     Marktplatz  1962   
