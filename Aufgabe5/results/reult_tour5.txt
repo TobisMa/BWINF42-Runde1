@@ -1,0 +1,76 @@
+                 Ort  Jahr Essentiell?  Distanz von Start
+0          Gabelhaus  1638                              0
+1          Burgruine  1654                            140
+2          Labyrinth  1667                            220
+3        Hõngepartie  1672                            470
+4     Hexentanzplatz  1681                            730
+5          Gabelhaus  1699                            820
+6     Hexentanzplatz  1703           X                980
+7        Eselsbr³cke  1711                           1100
+8      Dreibannstein  1724                           1210
+9         Alte Wache  1733                           1340
+10     Palisadenhaus  1740                           1490
+11     Dreibannstein  1752                           1620
+12     Schmetterling  1760           X               1770
+13     Dreibannstein  1781                           1850
+14       Mõrchenwald  1793           X               1930
+15          Fuchsbau  1811                           2010
+16          Torfmoor  1817                           2120
+17       Gartenschau  1825                           2260
+18       Mõrchenwald  1840                           2340
+19       Eselsbr³cke  1855                           2420
+20      Heimatmuseum  1863                           2490
+21       Eselsbr³cke  1877                           2590
+22     Reiterdenkmal  1880                           2730
+23         Riesenrad  1881                           2910
+24          Hochsitz  1885                           2980
+25       Gartenschau  1898                           3060
+26         Riesenrad  1902                           3180
+27     Dreibannstein  1911           X               3310
+28  Olympisches Dorf  1924                           3470
+29  Haus der Zukunft  1927           X               3600
+30         Stellwerk  1931                           3720
+31     Dreibannstein  1938                           3890
+32         Stellwerk  1942                           4020
+33         Labyrinth  1955                           4230
+34      Gauklerstadl  1961                           4310
+35       Planetarium  1971           X               4390
+36      Kõnguruhfarm  1976                           4440
+37         Balzplatz  1978                           4520
+38     Dreibannstein  1998           X               4610
+39         Labyrinth  2013                           4740
+40      CO2-Speicher  2022                           4930
+41         Gabelhaus  2023                           5000
+Looking for unnecessary subtours:
+Gabelhaus - Burgruine - Labyrinth - Hõngepartie - Hexentanzplatz - Gabelhaus
+Dreibannstein - Alte Wache - Palisadenhaus - Dreibannstein
+Mõrchenwald - Fuchsbau - Torfmoor - Gartenschau - Mõrchenwald
+Eselsbr³cke - Heimatmuseum - Eselsbr³cke
+Riesenrad - Hochsitz - Gartenschau - Riesenrad
+Stellwerk - Dreibannstein - Stellwerk
+Looking for a better start:
+new best start: Gabelhaus
+                   0     1  2
+0          Gabelhaus  1638   
+1     Hexentanzplatz  1703  X
+2        Eselsbr³cke  1711   
+3      Dreibannstein  1724   
+4      Schmetterling  1760  X
+5      Dreibannstein  1781   
+6        Mõrchenwald  1793  X
+7        Eselsbr³cke  1855   
+8      Reiterdenkmal  1880   
+9          Riesenrad  1881   
+10     Dreibannstein  1911  X
+11  Olympisches Dorf  1924   
+12  Haus der Zukunft  1927  X
+13         Stellwerk  1931   
+14         Labyrinth  1955   
+15      Gauklerstadl  1961   
+16       Planetarium  1971  X
+17      Kõnguruhfarm  1976   
+18         Balzplatz  1978   
+19     Dreibannstein  1998  X
+20         Labyrinth  2013   
+21      CO2-Speicher  2022   
+22         Gabelhaus  2023   

@@ -1,0 +1,29 @@
+              Ort  Jahr Essentiell?  Distanz von Start
+0      Talstation  1768                              0
+1          Wõldle  1805                            520
+2    Mittlere Alp  1823                           1160
+3   Observatorium  1833                           1450
+4          Wõldle  1841                           1700
+5     Bergstation  1866                           2370
+6   Observatorium  1874           X               2740
+7       Piz Spitz  1898                           3210
+8    Panoramasteg  1912           X               3430
+9     Bergstation  1928                           3690
+10   Ziegenbr³cke  1935                           3870
+11   Panoramasteg  1952                           4030
+12   Ziegenbr³cke  1979           X               4280
+13     Talstation  2005                           4560
+Looking for unnecessary subtours:
+Wõldle - Mittlere Alp - Observatorium - Wõldle
+Panoramasteg - Bergstation - Ziegenbr³cke - Panoramasteg
+Looking for a better start:
+new best start: Talstation
+               0     1  2
+0     Talstation  1768   
+1         Wõldle  1805   
+2    Bergstation  1866   
+3  Observatorium  1874  X
+4      Piz Spitz  1898   
+5   Panoramasteg  1912  X
+6   Ziegenbr³cke  1979  X
+7     Talstation  2005   

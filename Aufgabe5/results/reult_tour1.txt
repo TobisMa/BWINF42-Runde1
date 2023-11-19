@@ -1,0 +1,35 @@
+                     Ort  Jahr Essentiell?  Distanz von Start
+0               Brauerei  1613           X                  0
+1                 Karzer  1665           X                 80
+2                Rathaus  1678           X                150
+3         Gr³ndungsstein  1685                            310
+4             Wallanlage  1690                            410
+5                Rathaus  1739           X                500
+6           Euler-Br³cke  1768                            680
+7   Fibonacci-Gaststõtte  1820           X                710
+8          Schiefes Haus  1823                            830
+9                Theater  1880                            960
+10   Emmy-Noether-Campus  1912           X               1090
+11  Fibonacci-Gaststõtte  1923                           1180
+12          Hilbert-Raum  1945                           1300
+13         Schiefes Haus  1950                           1400
+14             Gau▀-Turm  1952                           1450
+15   Emmy-Noether-Campus  1998           X               1780
+16          Euler-Br³cke  1999                           1910
+17              Brauerei  2012                           2060
+Looking for unnecessary subtours:
+Rathaus - Gr³ndungsstein - Wallanlage - Rathaus
+Emmy-Noether-Campus - Fibonacci-Gaststõtte - Hilbert-Raum - Schiefes Haus - Gau▀-Turm - Emmy-Noether-Campus
+Looking for a better start:
+new best start: Brauerei
+                      0     1  2
+0              Brauerei  1613  X
+1                Karzer  1665  X
+2               Rathaus  1678  X
+3          Euler-Br³cke  1768   
+4  Fibonacci-Gaststõtte  1820  X
+5         Schiefes Haus  1823   
+6               Theater  1880   
+7   Emmy-Noether-Campus  1912  X
+8          Euler-Br³cke  1999   
+9              Brauerei  2012   
