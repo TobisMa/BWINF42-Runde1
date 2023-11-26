@@ -90,7 +90,6 @@ def solve(n: int, pairs: int, depth=100):
             
         # choosing start point
         pos1 = random.choice(free_positions)
-
         
         # finding every reachable field
         reachable_positions: Dict[Point, List[Point]] = get_reachable_positions(pos1, field, {})
@@ -103,7 +102,6 @@ def solve(n: int, pairs: int, depth=100):
                 solve(n, pairs, depth-1)
                 return
             continue
-
 
         # larger distances = more difficult to solve
         lpositions = sorted(list(reachable_positions), key=lambda x: len(reachable_positions[x]), reverse=True)
